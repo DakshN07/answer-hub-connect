@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
 import Topbar from "@/components/Topbar";
+import SidebarLayout from "@/components/SidebarLayout";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Faqs from "./pages/Faqs";
@@ -25,7 +26,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <SidebarProvider>
-          <div className="flex w-full min-h-screen">
+          <SidebarLayout>
             <AppSidebar />
             <div className="flex-1 flex flex-col">
               <Topbar />
@@ -43,7 +44,7 @@ const App = () => (
                 </Routes>
               </div>
             </div>
-          </div>
+          </SidebarLayout>
         </SidebarProvider>
       </BrowserRouter>
     </TooltipProvider>
