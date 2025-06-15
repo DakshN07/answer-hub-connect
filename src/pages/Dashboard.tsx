@@ -80,13 +80,15 @@ export default function Dashboard() {
   const totalTodayQuestions = recentQuestions.length;
 
   return (
-    <div className="flex flex-col flex-1 min-h-screen pl-64 pt-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto w-full px-8 py-10">
-        <h1 className="text-2xl font-bold mb-1">Multi-Platform Dashboard</h1>
-        <div className="text-gray-500 mb-6">Monitor your FAQ system performance across all platforms</div>
+    <div className="flex flex-col flex-1 min-h-screen bg-gray-50 pl-0 pt-16 md:pl-64 transition-all">
+      <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-8 py-8 md:py-10">
+        <h1 className="text-xl sm:text-2xl font-bold mb-1">Multi-Platform Dashboard</h1>
+        <div className="text-gray-500 mb-4 sm:mb-6 text-sm sm:text-base">
+          Monitor your FAQ system performance across all platforms
+        </div>
         
         {/* Overall Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-5 md:mb-8">
           <StatusCard
             icon={<CircleHelp className="w-6 h-6 text-blue-500" />}
             label="Total FAQs"
@@ -113,21 +115,21 @@ export default function Dashboard() {
         </div>
 
         {/* Platform Stats */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-8">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-3 sm:p-4 md:p-6 mb-5 md:mb-8">
+          <h2 className="text-base sm:text-lg font-semibold mb-3 flex items-center gap-2">
             <MessageSquare className="w-5 h-5 text-gray-600" />
             Platform Performance
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {platformStats.map((stat) => (
-              <div key={stat.platform} className="border border-gray-100 rounded-lg p-4 hover:shadow-sm transition">
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${platformColors[stat.platform as keyof typeof platformColors]}`}>
+              <div key={stat.platform} className="border border-gray-100 rounded-lg p-3 sm:p-4 hover:shadow-sm transition">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <span className={`px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${platformColors[stat.platform as keyof typeof platformColors]}`}>
                     {stat.platform}
                   </span>
-                  <span className="text-sm text-gray-500">{stat.accuracy}</span>
+                  <span className="text-xs sm:text-sm text-gray-500">{stat.accuracy}</span>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm">
                   <div>
                     <span className="text-gray-500">FAQs:</span>
                     <span className="font-semibold ml-1">{stat.faqs}</span>
@@ -143,15 +145,15 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Questions with Platform Filter */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 px-6 py-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Recent User Questions</h2>
-            <div className="flex items-center gap-3">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-100 px-2 sm:px-4 md:px-6 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 gap-3">
+            <h2 className="text-base sm:text-lg font-semibold">Recent User Questions</h2>
+            <div className="flex items-center gap-2 sm:gap-3">
               <Filter className="w-4 h-4 text-gray-400" />
               <select 
                 value={selectedPlatform}
                 onChange={(e) => setSelectedPlatform(e.target.value)}
-                className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-blue-500 outline-none"
+                className="border border-gray-200 rounded-lg px-2 sm:px-3 py-2 text-xs sm:text-sm focus:border-blue-500 outline-none"
               >
                 <option value="All">All Platforms</option>
                 {platformStats.map(stat => (
@@ -165,24 +167,24 @@ export default function Dashboard() {
             {filteredQuestions.map((q, i) => (
               <li
                 key={i}
-                className={`flex flex-col md:flex-row items-start md:items-center justify-between px-4 py-3 rounded-md transition
+                className={`flex flex-col md:flex-row items-start md:items-center justify-between px-2 sm:px-4 py-3 rounded-md transition
                             ${q.status === "unmatched" ? "bg-orange-50 border border-orange-100" : "bg-gray-50 border border-gray-100"}`}
               >
-                <div className="flex items-start gap-3 flex-1 w-full">
-                  <span className={`w-3 h-3 rounded-full mt-2 ${q.status === "matched" ? "bg-green-500" : "bg-orange-400"}`} />
-                  <div className="flex flex-col flex-grow">
-                    <span className="font-medium mb-1">{q.question}</span>
-                    <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-1">
-                      <span className="flex items-center gap-1">
+                <div className="flex items-start gap-2 sm:gap-3 flex-1 w-full">
+                  <span className={`w-3 h-3 rounded-full mt-1 sm:mt-2 ${q.status === "matched" ? "bg-green-500" : "bg-orange-400"}`} />
+                  <div className="flex flex-col flex-grow min-w-0">
+                    <span className="font-medium mb-1 text-sm sm:text-base break-words">{q.question}</span>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-gray-500 mb-1">
+                      <span className="flex items-center gap-1 min-w-fit">
                         <Clock className="w-4 h-4" /> {q.time}
                       </span>
-                      <span>Asked by: {q.user}</span>
+                      <span className="min-w-fit">Asked by: {q.user}</span>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${platformColors[q.platform as keyof typeof platformColors]}`}>
                         {q.platform}
                       </span>
                       {/* Answered by */}
                       {q.answeredBy && (
-                        <span className="flex items-center gap-1">
+                        <span className="flex items-center gap-1 min-w-fit">
                           <CheckCircle className="w-4 h-4 text-green-500" />
                           Answered by: {q.answeredBy}
                         </span>
@@ -202,7 +204,7 @@ export default function Dashboard() {
                     )}
                   </div>
                 </div>
-                <div className="text-sm mt-3 md:mt-0">
+                <div className="text-xs sm:text-sm mt-2 sm:mt-3 md:mt-0 flex-shrink-0">
                   {q.status === "matched" ? (
                     <span className="text-green-600 font-medium">✓ Matched</span>
                   ) : (
@@ -213,11 +215,11 @@ export default function Dashboard() {
             ))}
           </ul>
           
-          <div className="flex mt-6 justify-between items-center">
-            <div className="text-sm text-gray-500">
+          <div className="flex flex-col sm:flex-row mt-4 sm:mt-6 justify-between items-start sm:items-center gap-2">
+            <div className="text-xs sm:text-sm text-gray-500">
               Showing {filteredQuestions.length} questions {selectedPlatform !== "All" && `from ${selectedPlatform}`}
             </div>
-            <a href="/unknowns" className="bg-blue-600 text-white px-5 py-2 rounded-md shadow hover:bg-blue-700 transition">
+            <a href="/unknowns" className="bg-blue-600 text-white text-xs sm:text-base px-3 sm:px-5 py-2 rounded-md shadow hover:bg-blue-700 transition">
               Review Unknown Questions
             </a>
           </div>
