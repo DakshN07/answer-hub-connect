@@ -23,14 +23,14 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <SidebarProvider>
-        <div className="flex w-full min-h-screen">
-          <AppSidebar />
-          <div className="flex-1 flex flex-col">
-            <Topbar />
-            <SidebarTrigger className="fixed top-4 left-2 z-40 md:left-3 bg-white border border-gray-200 rounded-xl shadow-lg" />
-            <div className="flex-1">
-              <BrowserRouter>
+      <BrowserRouter>
+        <SidebarProvider>
+          <div className="flex w-full min-h-screen">
+            <AppSidebar />
+            <div className="flex-1 flex flex-col">
+              <Topbar />
+              <SidebarTrigger className="fixed top-4 left-2 z-40 md:left-3 bg-white border border-gray-200 rounded-xl shadow-lg" />
+              <div className="flex-1">
                 <Routes>
                   <Route path="/" element={<Navigate replace to="/dashboard" />} />
                   <Route path="/dashboard" element={<Dashboard />} />
@@ -41,11 +41,11 @@ const App = () => (
                   <Route path="/analytics" element={<Analytics />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </BrowserRouter>
+              </div>
             </div>
           </div>
-        </div>
-      </SidebarProvider>
+        </SidebarProvider>
+      </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
