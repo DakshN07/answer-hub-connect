@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import StatusCard from "@/components/StatusCard";
-import { CircleHelp, Sun, CheckCircle, Clock, Filter, MessageSquare } from "lucide-react";
+import { CircleHelp, Sun, CheckCircle, Clock, Filter, MessageSquare, Tag } from "lucide-react";
 
 const platformColors = {
   "Discord": "bg-purple-100 text-purple-700 border-purple-200",
@@ -20,41 +19,52 @@ const platformStats = [
   { platform: "RocketChat", faqs: 18, questions: 1, accuracy: "89.3%" },
 ];
 
+// Updated: Added answeredBy and tags fields
 const recentQuestions = [
   {
     question: "How do I reset my password?",
     platform: "Discord",
     time: "2 minutes ago",
     status: "matched",
-    user: "user#1234"
+    user: "user#1234",
+    answeredBy: "Bot",
+    tags: ["account", "security"]
   },
   {
     question: "What are the system requirements?",
     platform: "Slack",
     time: "15 minutes ago",
     status: "matched",
-    user: "john.doe@company.com"
+    user: "john.doe@company.com",
+    answeredBy: "Admin",
+    tags: ["requirements", "setup"]
   },
   {
     question: "Can I integrate with third-party tools?",
     platform: "Telegram",
     time: "1 hour ago",
     status: "unmatched",
-    user: "@username"
+    user: "@username",
+    answeredBy: "",
+    tags: ["integration"]
   },
   {
     question: "How do I export my data?",
     platform: "WhatsApp",
     time: "2 hours ago",
     status: "matched",
-    user: "+1234567890"
+    user: "+1234567890",
+    answeredBy: "Support",
+    tags: ["data", "export"]
   },
   {
     question: "What is the pricing structure?",
     platform: "Discord",
     time: "3 hours ago",
     status: "matched",
-    user: "admin#5678"
+    user: "admin#5678",
+    answeredBy: "Bot",
+    tags: ["pricing"]
   },
 ];
 
@@ -155,23 +165,44 @@ export default function Dashboard() {
             {filteredQuestions.map((q, i) => (
               <li
                 key={i}
-                className={`flex items-center justify-between px-4 py-3 rounded-md transition
+                className={`flex flex-col md:flex-row items-start md:items-center justify-between px-4 py-3 rounded-md transition
                             ${q.status === "unmatched" ? "bg-orange-50 border border-orange-100" : "bg-gray-50 border border-gray-100"}`}
               >
-                <div className="flex items-center gap-3 flex-1">
-                  <span className={`w-3 h-3 rounded-full ${q.status === "matched" ? "bg-green-500" : "bg-orange-400"}`} />
+                <div className="flex items-start gap-3 flex-1 w-full">
+                  <span className={`w-3 h-3 rounded-full mt-2 ${q.status === "matched" ? "bg-green-500" : "bg-orange-400"}`} />
                   <div className="flex flex-col flex-grow">
-                    <span className="font-medium">{q.question}</span>
-                    <div className="flex items-center gap-3 text-sm text-gray-500">
-                      <span>Asked {q.time}</span>
-                      <span>by {q.user}</span>
+                    <span className="font-medium mb-1">{q.question}</span>
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-1">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" /> {q.time}
+                      </span>
+                      <span>Asked by: {q.user}</span>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${platformColors[q.platform as keyof typeof platformColors]}`}>
                         {q.platform}
                       </span>
+                      {/* Answered by */}
+                      {q.answeredBy && (
+                        <span className="flex items-center gap-1">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          Answered by: {q.answeredBy}
+                        </span>
+                      )}
                     </div>
+                    {q.tags && q.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-1">
+                        {q.tags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-medium"
+                          >
+                            <Tag className="w-3 h-3" /> {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="text-sm">
+                <div className="text-sm mt-3 md:mt-0">
                   {q.status === "matched" ? (
                     <span className="text-green-600 font-medium">✓ Matched</span>
                   ) : (
