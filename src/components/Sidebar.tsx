@@ -2,14 +2,14 @@
 import React from "react";
 import {
   LayoutDashboard,
-  MessageSquareQuestion,
+  MessageSquareQuote,
   CircleHelp,
   Plus,
   Users,
   BarChart2,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import cn from "classnames";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   {
@@ -24,7 +24,7 @@ const navItems = [
   },
   {
     label: "Unknown Questions",
-    icon: <MessageSquareQuestion className="w-5 h-5 mr-2" />,
+    icon: <MessageSquareQuote className="w-5 h-5 mr-2" />,
     path: "/unknowns",
   },
   {
